@@ -383,13 +383,13 @@ class IsoTpMessage():
     if self.tx_len < self.max_len:
       # single frame (send all bytes)
       if self.debug:
-        print("ISO-TP: {hex(self._can_client.tx_addr)} - TX - single frame")
+        print(f"ISO-TP: {hex(self._can_client.tx_addr)} - TX - single frame")
       msg = (bytes([self.tx_len]) + self.tx_dat).ljust(self.max_len, b"\x00")
       self.tx_done = True
     else:
       # first frame (send first 6 bytes)
       if self.debug:
-        print("ISO-TP: {hex(self._can_client.tx_addr)} - TX - first frame")
+        print(f"ISO-TP: {hex(self._can_client.tx_addr)} - TX - first frame")
       msg = (struct.pack("!H", 0x1000 | self.tx_len) + self.tx_dat[:self.max_len - 2]).ljust(self.max_len - 2, b"\x00")
     self._can_client.send([msg])
 
